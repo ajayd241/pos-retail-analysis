@@ -19,45 +19,45 @@ resource "google_bigquery_table" "pos_transactions" {
 
   schema = jsonencode([
     {
-      name = "transaction_id"
-      type = "STRING"
-      mode = "REQUIRED"
+      name        = "transaction_id"
+      type        = "STRING"
+      mode        = "REQUIRED"
       description = "Unique transaction identifier"
     },
     {
-      name = "store_id"
-      type = "STRING"
-      mode = "REQUIRED"
+      name        = "store_id"
+      type        = "STRING"
+      mode        = "REQUIRED"
       description = "Store identifier"
     },
     {
-      name = "terminal_id"
-      type = "STRING"
-      mode = "REQUIRED"
+      name        = "terminal_id"
+      type        = "STRING"
+      mode        = "REQUIRED"
       description = "POS terminal identifier"
     },
     {
-      name = "transaction_timestamp"
-      type = "TIMESTAMP"
-      mode = "REQUIRED"
+      name        = "transaction_timestamp"
+      type        = "TIMESTAMP"
+      mode        = "REQUIRED"
       description = "When the transaction occurred"
     },
     {
-      name = "total_amount"
-      type = "FLOAT"
-      mode = "REQUIRED"
+      name        = "total_amount"
+      type        = "FLOAT"
+      mode        = "REQUIRED"
       description = "Total transaction amount"
     },
     {
-      name = "payment_method"
-      type = "STRING"
-      mode = "NULLABLE"
+      name        = "payment_method"
+      type        = "STRING"
+      mode        = "NULLABLE"
       description = "Payment method used"
     },
     {
-      name = "items"
-      type = "STRING"
-      mode = "NULLABLE"
+      name        = "items"
+      type        = "STRING"
+      mode        = "NULLABLE"
       description = "JSON string of items purchased"
     }
   ])
