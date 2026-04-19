@@ -39,7 +39,27 @@ override.tf.json
 .terraformrc
 # 
 # GCP
-*.json          
+# GCP credentials - specific files only
+service-account-key.json
+*-service-account.json
+*-sa-key.json
+application_default_credentials.json
+gcloud/        
 # catches any accidental key files
 terraform.rc
 terraform.tfvars
+
+# Python
+__pycache__/
+*.pyc
+.env
+.env.*
+venv/
+.venv/
+
+# IDE
+.idea/
+.vscode/
+*.DS_Store
+
+

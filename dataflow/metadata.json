@@ -1,0 +1,30 @@
+{
+  "name": "POS Transactions Pipeline",
+  "description": "Streaming pipeline that reads POS transaction events from Pub/Sub, validates and enriches them, then loads to BigQuery with dead letter handling.",
+  "parameters": [
+    {
+      "name": "subscription",
+      "label": "Pub/Sub subscription",
+      "helpText": "Full subscription path: projects/PROJECT_ID/subscriptions/SUBSCRIPTION_NAME",
+      "isOptional": false
+    },
+    {
+      "name": "bq_table",
+      "label": "BigQuery output table",
+      "helpText": "Format: PROJECT_ID:DATASET.TABLE",
+      "isOptional": false
+    },
+    {
+      "name": "bq_dead_letter",
+      "label": "BigQuery dead letter table",
+      "helpText": "Format: PROJECT_ID:DATASET.TABLE",
+      "isOptional": false
+    },
+    {
+      "name": "temp_location",
+      "label": "GCS temp location",
+      "helpText": "GCS path for temporary files: gs://BUCKET/tmp",
+      "isOptional": false
+    }
+  ]
+}
