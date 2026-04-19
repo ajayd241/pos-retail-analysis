@@ -45,6 +45,13 @@ def run(argv=None):
     parser.add_argument('--region',           default='us-central1')
     known_args, pipeline_args = parser.parse_known_args(argv)
 
+    # Pass project and region into Beam pipeline options explicitly
+    pipeline_args.extend([
+        f'--project={known_args.project}',
+        f'--region={known_args.region}',
+        f'--temp_location={known_args.temp_location}',
+    ])
+    
     options = PipelineOptions(pipeline_args)
     options.view_as(StandardOptions).streaming = True
 

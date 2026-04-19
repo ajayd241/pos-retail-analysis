@@ -25,6 +25,18 @@
       "label": "GCS temp location",
       "helpText": "GCS path for temporary files: gs://BUCKET/tmp",
       "isOptional": false
+    },
+    {
+      "name": "project",
+      "label": "GCP project ID",
+      "helpText": "Your GCP project ID",
+      "isOptional": false
+    },
+    {
+      "name": "region",
+      "label": "GCP region",
+      "helpText": "GCP region e.g. us-central1",
+      "isOptional": true
     }
   ]
 }
