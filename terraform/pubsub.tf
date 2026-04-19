@@ -18,7 +18,7 @@ resource "google_pubsub_subscription" "pos_transactions_sub" {
   ack_deadline_seconds = 60
 
   expiration_policy {
-    ttl = "86400s"
+    ttl = "604800s"
   }
 
   retry_policy {
