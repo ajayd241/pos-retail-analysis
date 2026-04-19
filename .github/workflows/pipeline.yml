@@ -20,6 +20,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Mask sensitive values
+        run: |
+          echo "::add-mask::${{ secrets.GCP_PROJECT_ID }}"
+          echo "::add-mask::${{ secrets.TF_STATE_BUCKET }}"
+
       - name: Authenticate to GCP via WIF
         uses: google-github-actions/auth@v2
         with:
@@ -48,4 +53,5 @@ jobs:
             gs://${{ secrets.TF_STATE_BUCKET }}/templates/pos-pipeline.json \
             --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/pos-retail-repo/pos-pipeline:latest \
             --sdk-language=PYTHON \
-            --metadata-file=dataflow/metadata.json
+            --metadata-file=dataflow/metadata.json \
+            --quiet
