@@ -1,4 +1,4 @@
-FROM apache/beam_python3.11_sdk:2.55.0
+FROM gcr.io/dataflow-templates-base/python311-template-launcher-base:latest
 
 WORKDIR /pipeline
 
@@ -10,5 +10,3 @@ COPY transformations.py .
 
 ENV FLEX_TEMPLATE_PYTHON_PY_FILE="/pipeline/pipeline.py"
 ENV FLEX_TEMPLATE_PYTHON_REQUIREMENTS_FILE="/pipeline/requirements.txt"
-
-ENTRYPOINT ["/opt/apache/beam/boot"]
