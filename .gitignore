@@ -36,7 +36,7 @@ override.tf.json
 
 # Ignore CLI configuration files
 .terraformrc
-
+# 
 # GCP
 *.json          # catches any accidental key files
 terraform.rc
