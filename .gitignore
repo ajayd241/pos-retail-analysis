@@ -6,6 +6,7 @@
 *.tfstate.*
 terraform.tfstate.backup
 .terraform.lock.hcl
+*.tfstate.backup
 
 # Crash log files
 crash.log
@@ -38,5 +39,7 @@ override.tf.json
 .terraformrc
 # 
 # GCP
-*.json          # catches any accidental key files
+*.json          
+# catches any accidental key files
 terraform.rc
+terraform.tfvars
