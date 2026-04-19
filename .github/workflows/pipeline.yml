@@ -1,0 +1,57 @@
+name: Build and Push Pipeline
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'dataflow/**'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-push:
+    name: Build Pipeline Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Mask sensitive values
+        run: |
+          echo "::add-mask::${{ secrets.GCP_PROJECT_ID }}"
+          echo "::add-mask::${{ secrets.TF_STATE_BUCKET }}"
+
+      - name: Authenticate to GCP via WIF
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+      - name: Configure Docker for Artifact Registry
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/pos-retail-repo/pos-pipeline:latest \
+            -t us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/pos-retail-repo/pos-pipeline:${{ github.sha }} \
+            ./dataflow
+
+      - name: Push Docker image
+        run: |
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/pos-retail-repo/pos-pipeline:latest
+          docker push us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/pos-retail-repo/pos-pipeline:${{ github.sha }}
+
+      - name: Stage Flex Template spec to GCS
+        run: |
+          gcloud dataflow flex-template build \
+            gs://${{ secrets.TF_STATE_BUCKET }}/templates/pos-pipeline.json \
+            --image=us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/pos-retail-repo/pos-pipeline:latest \
+            --sdk-language=PYTHON \
+            --metadata-file=dataflow/metadata.json \
+            --quiet
